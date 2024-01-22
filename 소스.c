@@ -4,153 +4,83 @@
 
 #pragma warning (disable:4996)
 
-typedef struct CoffeeStruct {
-
-	char name[20];
+typedef struct bookStruct
+{
+	char bookname[20];
+	char author[20];
 	int price;
+	int ISBN;
+} book;
 
-}coffee;
+void raiseBookPrice(int* pPrice, int add);
 
-typedef struct Node {
+void changeWritter(char* pAuthor, char* authorNewName);
 
-	int data;
-	struct Node* next;
-
-} node;
-
-node* createNode(int n);
-
-
+double calAverage(int* pArr, int size);
 
 int main() {
 
-	
-
 	/*
-	int * arr;
+	book favorite = { "이방인" , "카뮈", 12000, 456};
 
-	int n = 0;
-	printf("정수 배열의 크기를 입력하세요 > ");
-	scanf("%d", &n);
+	raiseBookPrice(&(favorite.price), 2000);
+
+	changeWritter(&(favorite.author), "쇼펜하우어");
+
+	printf("%d %s",favorite.price, favorite.author);
+
+	*/
+
+	// 1. 학생 수 입력 2. 동적인 배열 생성 3. 영어 점수 평균 구하기 
 
 
-	arr = (int*)malloc(n * sizeof(int));
+	int input = 0;
 
-	int i = 0;
+	printf("반의 학생수를 입력해주세요 > ");
+	scanf("%d", &input);
 
-	
+	int* arr;
+	arr = (int*) malloc(input * sizeof(int));  // (int *) 는 c++ 에서는 필수임
 
-	for (i = 0; i < n; i++)
+	int i;
+
+	for (i = 0; i < input; i++)
 	{
-		printf("배열에 넣을 정수를 입력하세요 > ");
+		printf("%d번째 학생의 영어점수를 입력하세요 > ", i+1);
 		scanf("%d", &arr[i]);
 	}
 
-	int max = arr[0];
 
-	for (i = 1; i < n; i++)
-	{
-		if (max < arr[i])
-		{
-			max = arr[i];
-		}
-	}
-	 
-	printf("정수 배열의 최대값은 %d입니다", max);
-	*/
+	double average = 0;
 
+	average = calAverage(arr, input);
 
-	/*
-	
-	
-	int n = 0;
-	printf(" 배열의 크기를 입력하세요 > ");
-	scanf("%d", &n);
+	printf("학생들의 영어점수 평균은 %lf입니다", average);
 
-	coffee* ptr;
-
-	ptr = (coffee*)malloc(n * sizeof(coffee));
-
-	int i = 0;
-
-	while(i < n)
-	{
-		getchar();
-
-		printf("커피이름 입력 > ");
-		gets(ptr[i].name);
-
-		printf("커피 가격 입력 > ");
-		scanf("%d", &(ptr[i].price));
-	
-
-		printf("\n");
-
-		i++;
-	}
-
-	i = 0;
-
-	while (i < n)
-	{
-		printf("%s : %d \n", ptr[i].name, ptr[i].price);
-		i++;
-	}
-
-	
-	*/
-
-	/*
-	
-	node first;
-	first.data = 1;
-
-	node second;
-	second.data = 2;
-
-	node third;
-	third.data = 3;
-
-	node forth;
-	forth.data = 4;
-
-
-	node* head;
-	head = &first;
-
-	first.next = &second;
-	second.next = &third;
-	third.next = &forth;
-
-	*/
-
-	node* head;
-
-	head = createNode(10);
-	head->next = createNode(20);
-	head->next->next = createNode(30);
-
-
+	free(arr);
 
 	return 0;
-
 }
 
-void printNode(node *head)
+
+void raiseBookPrice(int* pPrice, int add) 
 {
-	while (head->next != NULL)
+	*pPrice += add;
+}
+
+void changeWritter(char* pAuthor, char *authorNewName)
+{
+	strcpy(pAuthor, authorNewName);
+}
+
+double calAverage(int* pArr, int size)
+{
+	int sum = 0;
+
+	for (int i = 0; i < size; i++)
 	{
-		printf("%d->", head->data);
-		head = head->next;
+		sum += pArr[i];
 	}
-}
 
-node* createNode(int n) 
-{
-	node* newNode;
-	newNode = (node*)malloc(sizeof(node));
-	newNode->data = n;
-	newNode->next = NULL;
-	
-	return newNode;
+	return (double)sum / size;
 }
